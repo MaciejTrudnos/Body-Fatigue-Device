@@ -1,6 +1,8 @@
 {
     "sketch": "Program.ino",
     "output": "build",
-    "configuration": "cpu=atmega328",
-    "board": "arduino:avr:nano"
+    "board": "arduino:avr:nano",
+    "programmer": "arduino:avrisp",
+    "port": "COM12",
+    "configuration": "cpu=atmega328"
 }
