@@ -3,6 +3,6 @@
     "output": "build",
     "board": "arduino:avr:nano",
     "programmer": "arduino:avrisp",
-    "port": "COM12",
+    "port": "COM15",
     "configuration": "cpu=atmega328"
 }
