@@ -29,9 +29,9 @@ void setup()
         while (1);
     }
   
-    particleSensor.setup(); //Configure sensor with default settings
-    particleSensor.setPulseAmplitudeRed(0x0A); //Turn Red LED to low to indicate sensor is running
-    particleSensor.setPulseAmplitudeGreen(0); //Turn off Green LED
+    particleSensor.setup();
+    particleSensor.setPulseAmplitudeRed(0x0A);
+    particleSensor.setPulseAmplitudeGreen(0);
 }
 
 void loop()
