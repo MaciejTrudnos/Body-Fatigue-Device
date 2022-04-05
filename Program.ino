@@ -60,12 +60,12 @@ void loop()
         ibiAvg /= RATE_SIZE;
 
         BTserial.write(itoa(beatAvg, cstr, 10));
-        BTserial.write("; ");
+        BTserial.write(";");
         BTserial.write(itoa(ibiAvg, cstr, 10));
         BTserial.write('\n');
 
         Serial.print(beatAvg);
-        Serial.print("; ");
+        Serial.print(";");
         Serial.print(ibiAvg);
         Serial.println();
 
