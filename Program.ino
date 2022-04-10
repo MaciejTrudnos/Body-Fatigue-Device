@@ -7,13 +7,12 @@ SoftwareSerial BTserial(2, 3);
 
 MAX30105 particleSensor;
 
-const byte RATE_SIZE = 4;
-byte rateSpot = 0;
-long lastBeat = 0; //Time at which the last beat occurred
-float beatsPerMinute;
+const byte RATE_SIZE = 6;
+unsigned long starttime = 0;
+long lastBeat = 0;
+float beats;
 int beatAvg;
 int ibiAvg;
-int count = 0;
 char cstr[16];
 
 void setup()
@@ -36,41 +35,64 @@ void setup()
 
 void loop()
 {
-    long irValue = particleSensor.getIR();
+    starttime = millis();
     
-    if (checkForBeat(irValue) == true)
+    while (millis() < starttime + 10000)
     {
-        long delta = millis() - lastBeat;
+        long irValue = particleSensor.getIR();
         
-        lastBeat = millis();
-
-        beatsPerMinute = 60 / (delta / 1000.0);
-
-        if (beatsPerMinute < 255 && beatsPerMinute > 20)
+        if (irValue < 50000)
         {
-            beatAvg += beatsPerMinute;
-            ibiAvg += delta;
-            count++;
+            Serial.println("Correct the sensor!");
+            delay(1000);
+            break;
+        }
+        else
+        {
+            if (checkForBeat(irValue) == true)
+            {
+                long delta = millis() - lastBeat;
+            
+                lastBeat = millis();
+            
+                ibiAvg += delta;
+            
+                beats++;
+            }
         }
     }
 
-    if(count >= RATE_SIZE)
+    ibiAvg /=  beats;
+    beatAvg = beats * RATE_SIZE;
+
+    if (beatAvg < 255 && beatAvg > 20)
     {
-        beatAvg /= RATE_SIZE;
-        ibiAvg /= RATE_SIZE;
-
-        BTserial.write(itoa(beatAvg, cstr, 10));
-        BTserial.write(";");
-        BTserial.write(itoa(ibiAvg, cstr, 10));
-        BTserial.write('\n');
-
-        Serial.print(beatAvg);
-        Serial.print(";");
-        Serial.print(ibiAvg);
-        Serial.println();
-
-        count = 0;
-        beatAvg = 0;
-        ibiAvg = 0;
+        printData();
+        sendData();
     }
+
+    clear();
+}
+
+void sendData()
+{
+    BTserial.write(itoa(beatAvg, cstr, 10));
+    BTserial.write(";");
+    BTserial.write(itoa(ibiAvg, cstr, 10));
+    BTserial.write('\n');
+}
+
+void printData()
+{
+    Serial.print(beatAvg);
+    Serial.print(";");
+    Serial.print(ibiAvg);
+    Serial.println();
+}
+
+void clear()
+{
+    beats = 0;
+    beatAvg = 0;
+    ibiAvg = 0;     
 }
