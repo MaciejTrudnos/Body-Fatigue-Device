@@ -1,7 +1,7 @@
 # Body Fatigue Device #
 
-Is a heart rate monitoring device to calculate heart beats per minute (BPM) and interbeat interval (IBI) </br>
-Collected data is send via bluetooth to [Body Fatigue App](https://github.com/MaciejTrudnos/Body-Fatigue-App) which user can rate body fatigue level and analyze results
+A heart rate monitoring device that calculates beats per minute (BPM) and interbeat interval (IBI). <br>
+The collected data is sent via Bluetooth to the [Body Fatigue App](https://github.com/MaciejTrudnos/Body-Fatigue-App)
 
 ## Components
 - Arduino Pro Mini 5V/16 MHz
